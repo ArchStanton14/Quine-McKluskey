@@ -45,7 +45,18 @@ void getTerms(){
 
 void Logic::QM(){
    //arrange by single bit differences
-   //look for additional bit differences 
+   //look for additional bit differences
+   for (int i = 0; i < minterms.size() - 1; i++){
+        minterms.insert(minterms.begin(), bitDifference(minterms[i], minterms[i + 1]));
+        minterms.erase(minterms.begin() + i + 1);
+        minterms.erase(minterms.begin() + i + 2);   //very inneficient
+
+   }
+   //what's the base case? 
+}
+
+std::string bitDifference(std::string str1, std::string str2){
+    //probably easier to do this mathematically
 }
 
 /*

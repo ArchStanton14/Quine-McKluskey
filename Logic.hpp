@@ -48,5 +48,6 @@ class Logic{
         std::string expression; //the function expression
         //later add member for infix/postfix/prefix notation
         //later add member for symbology (+,^,*,etc)
+        std::string bitDifference(std::string str1, std::string str2);  //auxilary function to compare single bit differences
 
 };
