@@ -8,10 +8,11 @@ Logic::Logic(){
 /*Parameterized constructor
 *   @param expression the logical expression
 */
+/*
 Logic::Logic(std::string const &expression){
     this->expression = expression;
 }
-
+*/
 /*
 * @return minterms of the function
 */
@@ -23,12 +24,12 @@ std::vector<std::string> Logic::getminterms() const{
 /*
 * @return Maxterms of the function
 */
-
+/*
 //std::unordered_set<int> Logic::getMaxterms() const{
 std::vector<std::string> Logic::getMaxterms() const{
     return Maxterms;
 }
-
+*/
 
 /*
 * generates min and max terms from the expression
@@ -55,9 +56,49 @@ void Logic::QM(){
                 }
             }
         }
+    int count = 0;
+    int previousCount = 0;
     //while total size is getting smaller
-        
-        
+    while (previousCount > count){
+        std::vector<std::vector<std::string>> changed;
+        //bitDifference compare each term to every term in adjacent columns
+        for (int i = 0; i < columns.size() - 1; i++){
+            std::vector<std::string> v1;
+            std::vector<std::string> v2;
+            for (int j = 0; j < columns[i].size(); j++){
+                for (int k = 0; k < columns[i + 1].size(); k++){
+                    
+                    if (bitDifference(columns[i][j], columns[i + 1][k]) != ""){
+                        //check which column the new term should go in to
+                        //remove columns?
+                            
+                            //add combined implicate to both columns
+                            v1.push_back(bitDifference(columns[i][j], columns[i + 1][k]));
+                            v2.push_back(bitDifference(columns[i][j], columns[i + 1][k]));
+                            //columns[i][j] = bitDifference(columns[i][j], columns[i + 1][k]);
+                            //can't erace combined implcates yet because they might have to combine further.
+                            //columns[i + 1].erase(columns[i + 1].begin() + k);
+                    }
+                    else{
+                        v1.push_back(columns[i][j]);
+                        v2.push_back(columns[i + 1][k]);
+                    }
+                }
+            }
+           // changed[i] += v1;
+           // changed[i+1] += v2;
+           changed[i].insert(changed[i].end(), v1.begin(), v1.end());   //adds the changed values to a new vector so we can still continue combining the old values
+           changed[i + 1].insert(changed[i + 1].end(), v2.begin(), v2.end());
+        }
+        columns = changed;  //now we change to the new combined terms
+
+        //recalculate the size to see if we're done
+        previousCount = count;
+        count = 0;
+        for (int i = 0; i < columns.size(); i++){
+            count += columns[i].size();
+        }
+    }
     //what's the base case? 
 }
 
@@ -73,6 +114,12 @@ std::string bitDifference(std::string str1, std::string str2){
         else{
             out += str1[i];
         }
+    }
+    if (diff > 1){
+        return "";
+    }
+    else{
+        return out;
     }
 }
 
