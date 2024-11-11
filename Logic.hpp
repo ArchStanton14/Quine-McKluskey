@@ -44,10 +44,11 @@ class Logic{
         //std::unordered_set<int> minterms;   //the minterms of the function (binary numbers)
         //std::unordered_set<int> Maxterms;   //the Maxterms of the function (binary numbers)
         std::vector<std::string> minterms; // the minterms of the function as binary strings
-        std::vector<std::string> Maxterms; // the Maxterms of the function as binary strings        
-        std::string expression; //the function expression
+        //std::vector<std::string> Maxterms; // the Maxterms of the function as binary strings        
+        int size;   //the number of possible terms for the variable number
+        //std::string expression; //the function expression
         //later add member for infix/postfix/prefix notation
         //later add member for symbology (+,^,*,etc)
         std::string bitDifference(std::string str1, std::string str2);  //auxilary function to compare single bit differences
-
+        int countOnes(std::string s);
 };

@@ -45,15 +45,20 @@ void getTerms(){
 */
 
 void Logic::QM(){
-   //arrange by single bit differences
-   //look for additional bit differences
-   for (int i = 0; i < minterms.size() - 1; i++){
-        minterms.insert(minterms.begin(), bitDifference(minterms[i], minterms[i + 1]));
-        minterms.erase(minterms.begin() + i + 1);
-        minterms.erase(minterms.begin() + i + 2);   //very inneficient
-
-   }
-   //what's the base case? 
+    //create columns based on size
+    std::vector<std::vector<std::string>> columns;
+    for (int i = 0; i < size; i++){
+            columns.push_back({});
+            for(int j = 0; j < minterms.size(); j++){
+                if (countOnes(minterms[j]) == i){       //can be made more efficient by taking the ones count once and attaching it to the minterm
+                    columns[i].push_back(minterms[j]);
+                }
+            }
+        }
+    //while total size is getting smaller
+        
+        
+    //what's the base case? 
 }
 
 std::string bitDifference(std::string str1, std::string str2){
@@ -69,6 +74,16 @@ std::string bitDifference(std::string str1, std::string str2){
             out += str1[i];
         }
     }
+}
+
+int countOnes(std::string s){
+    int count  = 0;
+    for (int i = 0; i < s.length(); i++){
+        if (s[i] == '1'){
+            count++;
+        }
+    }
+    return count;
 }
 
 int main(){
