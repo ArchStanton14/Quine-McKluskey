@@ -1,5 +1,6 @@
 
 #include "Logic.hpp"
+#include <iostream>
 /*Default constructor*/
 Logic::Logic(){
 
@@ -57,6 +58,21 @@ void Logic::QM(){
 
 std::string bitDifference(std::string str1, std::string str2){
     //probably easier to do this mathematically
+    int diff = 0;
+    std::string out = "";
+    for (int  i = 0; i < str1.length(); i ++){
+        if (str1[i] != str2[i]){
+            out += 'X';
+            diff += 1;
+        }
+        else{
+            out += str1[i];
+        }
+    }
+}
+
+int main(){
+    std::cout << bitDifference("1101", "1111");
 }
 
 /*
