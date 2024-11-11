@@ -2,5 +2,7 @@
 #include "Logic.hpp"
 #include <iostream>
 int main(){
-    std::cout << bitDifference("1101", "1111");
+    Logic L;
+    L.setminterms({"0001", "0101"});
+    
 }

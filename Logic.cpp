@@ -21,6 +21,10 @@ std::vector<std::string> Logic::getminterms() const{
     return minterms;
 }
 
+std::vector<std::string> Logic::setminterms(std::vector<std::string> terms){
+    minterms = terms;
+}
+
 /*
 * @return Maxterms of the function
 */
@@ -40,6 +44,16 @@ void getTerms(){
     
 }
 
+int countOnes(std::string s){
+    int count  = 0;
+    for (int i = 0; i < s.length(); i++){
+        if (s[i] == '1'){
+            count++;
+        }
+    }
+    return count;
+}
+
 /*
 * uses Quine Mckluskey to simplify function
 * @post sets the expression to the simplified version
@@ -51,15 +65,20 @@ void Logic::QM(){
     for (int i = 0; i < size; i++){
             columns.push_back({});
             for(int j = 0; j < minterms.size(); j++){
+                /*  //can't figure out why this causes an error  
                 if (countOnes(minterms[j]) == i){       //can be made more efficient by taking the ones count once and attaching it to the minterm
                     columns[i].push_back(minterms[j]);
                 }
+                */
             }
+            //temporary, for testing
+            columns[i].push_back(minterms[i]);
         }
     int count = 0;
     int previousCount = 0;
     //while total size is getting smaller
     while (previousCount > count){
+        std::cout << "\n count: " << count << " previouscount: " << previousCount;
         std::vector<std::vector<std::string>> changed;
         //bitDifference compare each term to every term in adjacent columns
         for (int i = 0; i < columns.size() - 1; i++){
@@ -67,6 +86,7 @@ void Logic::QM(){
             std::vector<std::string> v2;
             for (int j = 0; j < columns[i].size(); j++){
                 for (int k = 0; k < columns[i + 1].size(); k++){
+                    std::cout << "\n i: " << i << " j: " << j << " k: " << k << std::endl << "col1: " << columns[i][j] << " col2: " << columns[i+1][k] << " Bitdifference: " << bitDifference(columns[i][j], columns[i + 1][k]);
                     
                     if (bitDifference(columns[i][j], columns[i + 1][k]) != ""){
                         //check which column the new term should go in to
@@ -123,21 +143,13 @@ std::string bitDifference(std::string str1, std::string str2){
     }
 }
 
-int countOnes(std::string s){
-    int count  = 0;
-    for (int i = 0; i < s.length(); i++){
-        if (s[i] == '1'){
-            count++;
-        }
-    }
-    return count;
-}
 
+/*
 int main(){
     std::cout << bitDifference("1101", "1111");
 }
 
-/*
+
 std::unordered_set<int> minterms;   //the minterms of the function 
 std::unordered_set<int> Maxterms;   //the Maxterms of the function
 std::string expression; //the function expression

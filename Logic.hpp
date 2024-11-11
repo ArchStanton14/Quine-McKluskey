@@ -1,6 +1,9 @@
 //Nathaniel Stanford
 //10-31-2024
 //declarations for Logic object for QM
+#ifndef LOGIC_
+#define LOGIC_
+
 #include <unordered_set>//order doesn't matter
 #include <string>
 #include <vector>
@@ -18,6 +21,12 @@ class Logic{
         */
         //std::unordered_set<int> getminterms() const;
         std::vector<std::string> getminterms() const;
+        /*
+        * @param new minterms
+        * @post sets new minterms
+        */
+
+        std::vector<std::string> setminterms( std::vector<std::string> terms);
         /*
         * @return Maxterms of the function
         */
@@ -38,7 +47,12 @@ class Logic{
         */
 
         void QM();
-
+        
+        /*
+        * counts the number of 1s in a binary string
+        * @return the number of ones as a int
+        */
+        int countOnes(std::string s);
         //later add function to get/set notation and symbology
     private:
         //std::unordered_set<int> minterms;   //the minterms of the function (binary numbers)
@@ -50,5 +64,6 @@ class Logic{
         //later add member for infix/postfix/prefix notation
         //later add member for symbology (+,^,*,etc)
         std::string bitDifference(std::string str1, std::string str2);  //auxilary function to compare single bit differences
-        int countOnes(std::string s);
+        
 };
+#endif
